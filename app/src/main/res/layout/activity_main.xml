@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/button"
             android:layout_toLeftOf="@+id/button"
-            android:hint="website.com"
+            android:hint="Enter website here"
             android:inputType="text"
             android:text=""/>
         
