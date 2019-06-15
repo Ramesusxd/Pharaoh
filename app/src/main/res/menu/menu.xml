@@ -17,6 +17,20 @@
     </item>
 
     <item
+        android:id="@+id/item_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="Refresh"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/item_stop"
+        android:icon="@drawable/ic_action_stop"
+        android:title="Stop"
+        app:showAsAction="always">
+    </item>
+
+    <item
         android:id="@+id/item_home"
         android:icon="@drawable/ic_action_home"
         android:title="Home"

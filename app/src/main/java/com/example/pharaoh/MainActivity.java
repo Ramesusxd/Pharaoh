@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.webView);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState);
         } else {
             webView.getSettings().setJavaScriptEnabled(true);
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             webView.getSettings().setBuiltInZoomControls(true);
             webView.getSettings().setLoadWithOverviewMode(true);
             webView.getSettings().setUseWideViewPort(true);
+            webView.loadUrl("url");
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webView.setBackgroundColor(Color.WHITE);
 
@@ -57,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onProgressChanged(WebView view, int progress) {
                     progressBar.setProgress(progress);
-                    if(progress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
+                    if (progress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
                         progressBar.setVisibility(ProgressBar.VISIBLE);
 
                     }
-                    if(progress == 100) {
+                    if (progress == 100) {
                         progressBar.setVisibility(ProgressBar.GONE);
                     }
 
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        button.setOnClickListener(new View.OnClickListener()  {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -79,8 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
                 webView.loadUrl("https://" + editText.getText().toString());
                 editText.setText("");
+
+
             }
         });
+
+
 
 
     }
@@ -89,22 +94,6 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistantState) {
         super.onSaveInstanceState(outState, outPersistantState);
         webView.saveState(outState);
-    }
-
-    public class ourViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            CookieManager.getInstance().setAcceptCookie(true);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-        }
-
-
     }
 
     @Override
@@ -124,16 +113,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_back:
-                if(webView.canGoBack()) {
+                if (webView.canGoBack()) {
                     webView.goBack();
                 }
 
                 return true;
             case R.id.item_forward:
-                if(webView.canGoForward()) {
+                if (webView.canGoForward()) {
                     webView.goForward();
                 }
 
+                return true;
+
+            case R.id.item_refresh:
+                webView.loadUrl(webView.getUrl());
                 return true;
 
             case R.id.item_home:
@@ -144,9 +137,31 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText("");
 
                 return true;
+
+            case R.id.item_stop:
+                webView.stopLoading();
+                return true;
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    public class ourViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            CookieManager.getInstance().setAcceptCookie(true);
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+        }
+
 
     }
 }
