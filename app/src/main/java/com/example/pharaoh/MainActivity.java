@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+
 public class MainActivity extends AppCompatActivity {
 
     WebView webView;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         webView = (WebView) findViewById(R.id.webView);
+
 
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState);
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+            /* Progress loadbar animation */
 
 
         }
@@ -78,17 +81,24 @@ public class MainActivity extends AppCompatActivity {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
+
+                if (editText.getText().toString() == "whateverText") {
+                    // this line is looking for a keyword or URL
+                }
+
                 webView.loadUrl("https://" + editText.getText().toString());
-                editText.setText("");
+                webView.loadUrl("https://www.google.com/#q=" + editText.getText());
+                /* these 2 lines are needed to identify if its a URL search or Keyword search */
 
 
             }
+
+
         });
 
 
-
-
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistantState) {
@@ -164,4 +174,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }
